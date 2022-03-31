@@ -29,3 +29,7 @@ Medicare provides different health plans which cover different parts of healthca
 *  Medicare Part D (prescription drug coverage) - Helps cover the cost of prescription drugs (including many recommended shots or vaccines).
 
 Check out more here: https://www.medicare.gov/what-medicare-covers/your-medicare-coverage-choices/whats-medicare
+
+##  CMS Part D API
+
+You can find the official Medicare Part D API documentation here: https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug/api-docs

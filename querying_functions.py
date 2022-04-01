@@ -59,11 +59,11 @@ def fetch_city(city_name, state_abbreviation):
 ###
 ###  TODO
 ###
-### 1. Add cost filtering component
+### 1. Add component for BOTH claims and cost
 ### 2. Probably need a way to tidy up the if logic
 ###
 
-def fetch_generic_drug(generic_drug_name, claims_count = None , claims_indication = None , total_cost = None):
+def fetch_generic_drug(generic_drug_name, claims_count = None , claims_indication = None , total_cost = None, cost_indication = None):
 
     cms_domain = 'https://data.cms.gov/data-api/v1/dataset/5a27f7a8-c7af-434f-a26c-54db03e22cd1/data?'
 
@@ -82,11 +82,25 @@ def fetch_generic_drug(generic_drug_name, claims_count = None , claims_indicatio
             api_filter = ('&filter[Gnrc_Name]=' + generic_drug_name + '&filter[name-filter][condition][path]=Tot_Clms&filter[name-filter][condition][operator]=<&filter[name-filter][condition][value][1]=' + str(claims_count))
             query_string = (cms_domain + api_filter)
 
+    if claims_count == None and total_cost != None:
+
+        if cost_indication == 'greater':
+            api_filter = ('&filter[Gnrc_Name]=' + generic_drug_name + '&filter[name-filter][condition][path]=Tot_Drug_Cst&filter[name-filter][condition][operator]=>&filter[name-filter][condition][value][1]=' + str(total_cost))
+            query_string = (cms_domain + api_filter)
+            print(query_string)
+
+        if cost_indication == 'lesser':
+            api_filter = ('&filter[Gnrc_Name]=' + generic_drug_name + '&filter[name-filter][condition][path]=Tot_Drug_Cst&filter[name-filter][condition][operator]=<&filter[name-filter][condition][value][1]=' + str(total_cost))
+            query_string = (cms_domain + api_filter)
+            print(query_string)
+
+    ##if claims_count != None and total_cost != None:
+
     api_request = requests.get(query_string)
     json_data = api_request.json()
     placeholder_df = pandas.DataFrame.from_dict(json_data)
     print(placeholder_df)
-    placeholder_df.to_csv('part_d_data_export.csv', header=True, index=False)
+    #placeholder_df.to_csv('part_d_data_export.csv', header=True, index=False)
     return(placeholder_df)
 
 ### Examples: 
@@ -95,3 +109,5 @@ def fetch_generic_drug(generic_drug_name, claims_count = None , claims_indicatio
 ### 
 ### fetch_generic_drug('Oxycodone Hcl')
 ### fetch_generic_drug(generic_drug_name = 'Atorvastatin Calcium' , claims_count = 1500 , claims_indication = 'greater')
+### ffetch_generic_drug(generic_drug_name = 'Atorvastatin Calcium' , total_cost = 50000 , cost_indication = 'greater')
+

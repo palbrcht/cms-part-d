@@ -1,3 +1,4 @@
+from pydoc import doc
 import pandas
 import requests
 
@@ -100,4 +101,3 @@ class cms_query(object):
 ### fetch_generic_drug('Oxycodone Hcl')
 ### fetch_generic_drug(generic_drug_name = 'Atorvastatin Calcium' , claims_count = 1500 , claims_indication = 'greater')
 ### fetch_generic_drug(generic_drug_name = 'Atorvastatin Calcium' , total_cost = 50000 , cost_indication = 'greater')
-
